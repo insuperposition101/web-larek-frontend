@@ -1,7 +1,7 @@
 import { Component } from './base/Component';
 import { ILotItem } from '../types';
 import { bem, createElement, ensureElement } from '../utils/utils';
-
+import { categoryColor } from '../utils/constants';
 
 interface ICardActions {
 	onClick: (event: MouseEvent) => void;
@@ -12,7 +12,7 @@ export interface ICard<T> {
 	description: string | string[];
 	image: string;
 	category: string;
-	price: number;
+	price: number | null;
 	index: number;
 }
 
@@ -23,13 +23,6 @@ export class Card<T> extends Component<ICard<T>> {
 	protected _button?: HTMLButtonElement;
 	protected _category: HTMLElement;
 	protected _price: HTMLElement;
-	protected _categoryColor = <Record<string, string>>{
-		'софт-скил': 'card__category_soft',
-		'другое': 'card__category_other',
-		'дополнительное': 'card__category_additional',
-		'кнопка': 'card__category_button',
-		'хард-скил': 'card__category_hard',
-	};
 
 	constructor(
 		protected blockName: string,
@@ -83,7 +76,7 @@ export class Card<T> extends Component<ICard<T>> {
 
 	set category(value: string) {
 		this.setText(this._category, value);
-		this._category.classList.add(this._categoryColor[value]);
+		this._category.classList.add(categoryColor[value]);
 	}
 
 	set price(value: number | null) {
@@ -101,8 +94,8 @@ export class Card<T> extends Component<ICard<T>> {
 export type IBasketItem = {
 	index?: number;
 	id?: string;
-    title: string;
-    price: number;
+	title: string;
+	price: number | null;
 };
 
 export class BasketItem extends Component<IBasketItem> {
@@ -116,9 +109,7 @@ export class BasketItem extends Component<IBasketItem> {
 		protected blockName: string,
 		container: HTMLElement,
 		actions?: ICardActions
-	) 
-
-	{
+	) {
 		super(container);
 		this._title = ensureElement<HTMLElement>(`.${blockName}__title`, container);
 		this._price = ensureElement<HTMLElement>(`.${blockName}__price`, container);

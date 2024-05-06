@@ -11,7 +11,7 @@
 - src/pages/index.html — HTML-файл главной страницы
 - src/types/index.ts — файл с типами
 - src/index.ts — точка входа приложения
-- src/styles/styles.scss — корневой файл стилей
+- src/scss/styles.scss — корневой файл стилей
 - src/utils/constants.ts — файл с константами
 - src/utils/utils.ts — файл с утилитами
 
@@ -63,7 +63,7 @@ interface ILotItem {
     title: string;
     description?: string;
     image?: string;
-    price: number;
+    price: number | null;
     category?: string;
 }
 ```
@@ -88,11 +88,12 @@ interface IOrder extends IOrderForm {
 }
 ```
 
-### Интерфейс IOrderResult - содержит id оформленного заказа
+### Интерфейс IOrderResult - содержит id и стоимость оформленного заказа
 
 ```
 interface IOrderResult {
     id: string;
+    total: number;
 }
 ```
 
@@ -413,3 +414,23 @@ interface IOrderResult {
 
 
 ## Файл **src/index.ts.** выполняет роль Презентера.
+
+
+## События сайта
+
+items:changed - перезагрузка страницы (отображается каталог товаров)
+modal:open - открытие модального окна
+modal:close - закрытие модального окна
+card:select - открытие превью карточки
+preview:changed - (открылось моальное окно карточки) отображение превью товара
+auction:changed - добавление товара в корзину
+bids:open - открытие корзины
+lot:deleted - удаление товара из корзины
+basketContent:changed - (открылась корзина) отображение сожержимого корзины
+order:open - нажатие на кнопку "Оформить" в корзине
+formErrors:change - изменился статус валидации
+payment:set - пользователь выбрал способ оплаты
+order:ready - введенные данные валидны
+order:submit - отправка формы заказа
+contacts:ready - введенные контактные данные валидны
+contacts:submit - отправка формы контактов и завершение покупки

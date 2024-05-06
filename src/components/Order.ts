@@ -1,13 +1,13 @@
-import {Form} from "./common/Form";
-import {IOrderForm} from "../types";
-import {EventEmitter, IEvents} from "./base/events";
-import {ensureElement} from "../utils/utils";
+import { Form } from './common/Form';
+import { IOrderForm } from '../types';
+import { EventEmitter, IEvents } from './base/Events';
+import { ensureElement } from '../utils/utils';
 
 export class Order extends Form<IOrderForm> {
-    protected _buttons: HTMLButtonElement[];
-    
-    constructor(container: HTMLFormElement, events: IEvents) {
-        super(container, events);
+	protected _buttons: HTMLButtonElement[];
+
+	constructor(container: HTMLFormElement, events: IEvents) {
+		super(container, events);
 
 		this._buttons = Array.from(container.querySelectorAll('.button_alt'));
 		this._buttons.forEach((button) => {
@@ -16,16 +16,17 @@ export class Order extends Form<IOrderForm> {
 				this.payment = button.name;
 			});
 		});
-    }
+	}
 
-    set phone(value: string) {
-        (this.container.elements.namedItem('phone') as HTMLInputElement).value = value;
-    }
+	set phone(value: string) {
+		(this.container.elements.namedItem('phone') as HTMLInputElement).value =
+			value;
+	}
 
-    set email(value: string) {
-        (this.container.elements.namedItem('email') as HTMLInputElement).value = value;
-    }
-
+	set email(value: string) {
+		(this.container.elements.namedItem('email') as HTMLInputElement).value =
+			value;
+	}
 
 	set payment(name: string) {
 		this._buttons.forEach((button) => {

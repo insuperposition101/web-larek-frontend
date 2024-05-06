@@ -1,5 +1,5 @@
-import { Api, ApiListResponse } from './base/api';
-import { IOrder, IOrderResult, ILotItem } from '../types';
+import { Api } from './base/Api';
+import { IOrder, IOrderResult, ILotItem, ApiListResponse } from '../types';
 
 export class WebAPI extends Api {
 	readonly cdn: string;

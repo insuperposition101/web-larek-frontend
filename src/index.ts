@@ -2,7 +2,7 @@ import './scss/styles.scss';
 
 import { WebAPI } from './components/WebAPI';
 import { API_URL, CDN_URL } from './utils/constants';
-import { EventEmitter } from './components/base/events';
+import { EventEmitter } from './components/base/Events';
 import { AppState, CatalogChangeEvent, LotItem } from './components/AppData';
 import { Page } from './components/Page';
 import { Card, BasketItem } from './components/Card';
@@ -88,33 +88,18 @@ events.on('card:select', (item: LotItem) => {
 
 // Изменен открытый выбранный лот
 events.on('preview:changed', (item: LotItem) => {
-	const showItem = (item: LotItem) => {
-		const card = new Card('card', cloneTemplate(cardPreviewTemplate), {
-			onClick: () => events.emit('auction:changed', item),
-		});
-		modal.render({
-			content: card.render({
-				title: item.title,
-				image: item.image,
-				description: item.description,
-				category: item.category,
-				price: item.price,
-			}),
-		});
-	};
-
-	if (item) {
-		api
-			.getLotItem(item.id)
-			.then((result) => {
-				showItem(item);
-			})
-			.catch((err) => {
-				console.error(err);
-			});
-	} else {
-		modal.close();
-	}
+	const card = new Card('card', cloneTemplate(cardPreviewTemplate), {
+		onClick: () => events.emit('auction:changed', item),
+	});
+	modal.render({
+		content: card.render({
+			title: item.title,
+			image: item.image,
+			description: item.description,
+			category: item.category,
+			price: item.price,
+		}),
+	});
 });
 
 //Добавить лот в корзину
@@ -205,7 +190,6 @@ events.on('contacts:submit', () => {
 	api
 		.orderLots(appData.order)
 		.then((result) => {
-			console.log(appData.order);
 			const success = new Success(cloneTemplate(successTemplate), {
 				onClick: () => {
 					modal.close();
